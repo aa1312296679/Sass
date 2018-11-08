@@ -1,0 +1,52 @@
+@charset "utf-8";
+//导入当前路径下的指定名称的sass文件并进行预编译
+@import "./box1.scss";
+//将指定路径的css导入到该sass预编译之后的css中
+//该路径不以当前的sass文件路径为根路径，以sass文件编译后的css文件的路径为根路径
+@import "../sass/test2.css";
+body {
+  background: $bodyBgColor;
+  border: $bodyBorder $bodyBorderColor;
+  //对变量的值进行计算
+  //计算后的结果直接添加结果的单位即可，不需要用+作为连接符
+  height: $bodyHeight+2px+random($limit:50);
+
+  @include boxes(box);
+
+  @media (min-width: 960px) {
+    //sass嵌套
+    //设置body下的子元素id为box1的元素的css样式
+    #box1{
+      //调用代码块
+      //通过@include调用指定名称的代码块并传参
+      @include box(1px,brown,solid);
+    }
+
+    #box2{
+      @include box(1px,brown,solid);
+    }
+
+    #box3{
+      @include box(1px,brown,solid);
+    }
+  }
+
+  @media (max-width: 900px) {
+    //sass嵌套
+    //设置body下的子元素id为box1的元素的css样式
+    #box1{
+      //调用代码块
+      //通过@include调用指定名称的代码块并传参
+      @include box(1px,orange,solid);
+    }
+
+    #box2{
+      @include box(1px,orange,solid);
+    }
+
+    #box3{
+      @include box(1px,orange,solid);
+    }
+  }
+}
+

@@ -1,0 +1,102 @@
+@charset "utf-8";
+//body的背景
+$bodyBgColor:gray;
+//body的边框样式
+$bodyBorder:1px solid;
+//body的边框颜色
+$bodyBorderColor:yellow;
+$bodyHeight:50;
+$width:100%;
+
+/**
+    @mixin声明带参数的代码块
+    主要用于封装sass代码
+    borderWitdh 边框宽度
+    borderColor 边框颜色
+    borderStyle 边框样式
+ */
+@mixin box($borderWidth,$borderColor,$borderStyle){
+  width: $width;
+  height: $bodyHeight+50px;
+  //嵌套boder属性
+  //属性嵌套必须给属性添加:以此区分属性嵌套和选择器嵌套
+  border: {
+    width:$borderWidth;
+    color:$borderColor;
+    style:$borderStyle;
+  };
+
+  a{
+    //&获取当前选择器的父选择器
+    //以此实现设置元素的伪类样式
+    &:hover{
+      color:green;
+      display: block;
+      width: aHover();
+      height: aHover(20);
+    }
+  }
+}
+
+@mixin boxes($div) {
+  //创建颜色数组
+  $bgcolors: red, green, orange;
+
+  .kg {
+    width: 50px;
+  }
+
+  $num: 1;
+  @while $num<=3 {
+    ##{$div}#{$num} {
+      width: 100px;
+      height: 100px;
+      //根据循环次数的下标取出每个色值
+      background-color: nth($bgcolors, $num);
+      @extend .kg;
+    }
+    $num: $num+1;
+  }
+
+  //@each $bgcolor in $bgcolors{
+  //  ##{$div}#{$num}{
+  //    width: 100px;
+  //    height: 100px;
+  //    //根据循环次数的下标取出每个色值
+  //    background-color: $bgcolor;
+  //  }
+  //  $num:$num+1;
+  //}
+  //for的逻辑结构为初始变量 初始次数 最大次数
+  //through为<=最大次数 to为<最大次数
+  //@for $num from 1 through 3{
+  //  //sass中#字符要和变量连接必须通过#{}解构符将变量解构
+  //  //sass中的#{}解构符只能用于for循环中
+  //  ##{$div}#{$num}{
+  //    width: 100px;
+  //    height: 100px;
+  //    //根据循环次数的下标取出每个色值
+  //    background-color: nth($bgcolors,$num);
+  //  }
+  //}
+  //@for $num from 1 to 3{
+  //  //sass中#字符要和变量连接必须通过#{}解构符将变量解构
+  //  ##{$div}#{$num}{
+  //    background-color: aquamarine+$num;
+  //  }
+  //}
+
+}
+
+
+//自定义的参数的默认值通过:设定
+@function aHover($widthHeght:50px){
+
+  @if $widthHeght<50 {
+    //自定义函数的返回值通过return返回
+    @return $widthHeght+20px;
+  }@else {
+    @return $widthHeght+50px;
+  }
+
+}
